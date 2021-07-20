@@ -9,6 +9,7 @@ dotenv.config();
 
 app.use(bodyParser())
 app.use(require('./routes/api'))
+app.use(Express.static('public/'));
 
 app.use(cors({
     origin: "*",
