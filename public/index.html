@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/loading.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="header">
+        <img src="assets/clanImage.png" alt="">
+        <h3 class="title">Quality Dutch API</h3>
+
+    </div>
+
+    <div class="dataTable" id="tableDiv">
+        <p>Hieronder staat een tabel met statistieken over de clanleden. Waaronder ook de gegevens van de afgelopen war. Gemaakt door timv13 & Koffievlek.</p>
+        <br>
+        <p id="warning"><strong>Mensen die niet hebben aangevallen tijdens de clanwar: </strong></p>
+        <textarea name="" id="textarea" cols="50" rows="3"></textarea>
+        <button onclick="copy()">Kopieëren</button>
+        <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+    </div>
+
+    <div class="loading" id="loading">
+        <img src="assets/clanImage.png" class="loadingImage" alt="">
+        <div class="loadingBar"></div>
+    </div>
 </body>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="scripts/index.js"></script>
 </html>

@@ -17,4 +17,10 @@ router.get('/wars', (req, res) => {
     })
 })
 
+router.get('/members', (req, res) => {
+    request.memberData(function(response) {
+        res.send(response)
+    })
+})
+
 module.exports = router

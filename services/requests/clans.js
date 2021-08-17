@@ -20,4 +20,14 @@ function warData(callback) {
       });
 }
 
-module.exports = {clanData, warData}
+function memberData(callback) {
+  request('https://api.clashroyale.com/v1/clans/%23VQ0G020/members', {
+      'auth': {
+        'bearer': process.env.API_KEY
+      }
+    }, function (error, response, body) {
+      callback(body)
+    });
+}
+
+module.exports = {clanData, warData, memberData}
