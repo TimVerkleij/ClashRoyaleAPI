@@ -2,7 +2,11 @@ const router = require('express').Router()
 const request = require('../services/requests/clans')
 
 router.get('/test', (req, res) => {
-    res.json('hi')
+    require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+        console.log('addr: ' + add);
+        res.json(add)
+      })
+    
 })
 
 router.get('/clans', (req, res) => {
