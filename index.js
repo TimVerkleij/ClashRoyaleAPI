@@ -19,6 +19,3 @@ app.use(cors({
 console.log("listening on port: " + process.env.PORT)
 app.listen(process.env.PORT);
 
-require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-    console.log('addr: ' + add);
-  })
