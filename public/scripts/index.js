@@ -90,6 +90,8 @@ fetch('/clans').then((response) => {
 		})
     })
 
+}).catch(err => {
+    console.log(err)
 });
 
 
