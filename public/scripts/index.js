@@ -64,9 +64,8 @@ fetch('/clans').then((response) => {
 				
             })
 
-
-            let fame = warData.participants.filter(participant => participant.tag == member.tag)[0].fame
-            let decksUsed = warData.participants.filter(participant => participant.tag == member.tag)[0].decksUsed
+            let fame = warData.participants.filter(participant => participant.tag == member.tag)[0]?.fame
+            let decksUsed = warData.participants.filter(participant => participant.tag == member.tag)[0]?.decksUsed
 
             let propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = fame
@@ -90,6 +89,8 @@ fetch('/clans').then((response) => {
 		})
     })
 
+}).catch(err => {
+    console.log(err)
 });
 
 
