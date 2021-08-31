@@ -85,8 +85,9 @@ fetch('/clans').then((response) => {
 		loadingDiv.style.opacity = "0%"
 		// document.getElementById('warning').innerHTML = 
 		waarschuwLijst.forEach(member => {
-			document.getElementById('textarea').innerHTML += `${member} - `
+			document.getElementById('textarea').innerHTML += `${member}, `
 		})
+        document.getElementById('textarea').innerHTML += "waarom hebben jullie niet meegedaan in de clanwar?"
     })
 
 }).catch(err => {
