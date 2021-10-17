@@ -2,7 +2,7 @@ fetch('/clans').then((response) => {
     return response.json();
 }).then((data) => {
     let members = data.memberList
-	let waarschuwLijst = []
+    let waarschuwLijst = []
 
     members.forEach(member => {
         let time = moment(member.lastSeen.toString())._d.valueOf()
@@ -25,7 +25,7 @@ fetch('/clans').then((response) => {
 
     const tableDiv = document.getElementById("tableDiv")
     const table = document.createElement("table")
-	table.id = "table"
+    table.id = "table"
     const header = table.createTHead()
     const headerRow = header.insertRow(0)
 
@@ -45,7 +45,7 @@ fetch('/clans').then((response) => {
     fetch('/wars').then((response) => {
         return response.json();
     }).then((warData) => {
-
+        console.log(warData)
         warData = warData.items[0].standings.filter(clan => clan.clan.name == "Quality Dutch")[0].clan;
 
         const memberProperties = ["name", "role", "laatstGezien"]
@@ -55,38 +55,38 @@ fetch('/clans').then((response) => {
             memberProperties.forEach(property => {
                 let propertyCell = memberRow.insertCell(-1)
                 propertyCell.innerHTML = member[property]
-				
-				if(member[property].includes("dagen") && member[property].split(" ")[0] >= 3 && member.name !== "timv13") {
-					propertyCell.style.color = "red"
-					propertyCell.style.fontWeight = "bold"
-					memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
-				}
-				
+
+                if (member[property].includes("dagen") && member[property].split(" ")[0] >= 3 && member.name !== "timv13") {
+                    propertyCell.style.color = "red"
+                    propertyCell.style.fontWeight = "bold"
+                    memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
+                }
+
             })
 
-            let fame = warData.participants.filter(participant => participant.tag == member.tag)[0]?.fame
-            let decksUsed = warData.participants.filter(participant => participant.tag == member.tag)[0]?.decksUsed
+            let fame = warData.participants.filter(participant => participant.tag == member.tag)[0]?.fame || 0
+            let decksUsed = warData.participants.filter(participant => participant.tag == member.tag)[0]?.decksUsed || 0
 
             let propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = fame
-			if(fame == 0) {
-				waarschuwLijst.push(member.name)
-				propertyCell.style.color = "red"
-				propertyCell.style.fontWeight = "bold"
-				memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
-			}
+            if (fame == 0) {
+                waarschuwLijst.push(member.name)
+                propertyCell.style.color = "red"
+                propertyCell.style.fontWeight = "bold"
+                memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
+            }
             propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = decksUsed
         })
 
         tableDiv.append(table)
-		tableDiv.style.opacity = "100%"
-		let loadingDiv = document.getElementById("loading")
-		loadingDiv.style.opacity = "0%"
-		// document.getElementById('warning').innerHTML = 
-		waarschuwLijst.forEach(member => {
-			document.getElementById('textarea').innerHTML += `${member}, `
-		})
+        tableDiv.style.opacity = "100%"
+        let loadingDiv = document.getElementById("loading")
+        loadingDiv.style.opacity = "0%"
+            // document.getElementById('warning').innerHTML =
+        waarschuwLijst.forEach(member => {
+            document.getElementById('textarea').innerHTML += `${member}, `
+        })
         document.getElementById('textarea').innerHTML += "waarom hebben jullie niet meegedaan in de clanwar?"
     })
 
@@ -96,14 +96,32 @@ fetch('/clans').then((response) => {
 
 
 function copy() {
-	document.querySelector("textarea").select();
+    document.querySelector("textarea").select();
     document.execCommand('copy');
 }
 
 function ExportToExcel(type, fn, dl) {
-	var elt = document.getElementById('table');
-	var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
-	return dl ?
-	  XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
-	  XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
- }
+    var elt = document.getElementById('table');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ? XLSX.write(wb, {
+        bookType: type,
+        bookSST: true,
+        type: 'base64'
+    }) : XLSX.writeFile(wb, fn || ('MySheetName.' + (
+        type || 'xlsx'
+    )));
+}
+
+fetch('/members').then((response) => {
+    return response.json();
+}).then((data) => {
+    let response = data.response
+
+    for (let i = 0; i < response.length; i++) {
+        const member = response[i];
+        if(member.daysInClan >= 8*7 && member.role === "member") {
+            console.log("some people need promotion!")
+            break
+        }
+    }
+})
