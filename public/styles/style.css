@@ -38,6 +38,24 @@
     overflow-x: auto;
 }
 
+.pop-up {
+    position: fixed;
+    right: -370px;
+    bottom: 10px;
+    background-color: rgba(71, 226, 10, 0.671);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 300px;
+    height: 80px;
+    transition: .3s;
+    pointer-events: none;
+}
+
+.pop-up > p {
+    margin: 10px;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;

@@ -45,7 +45,6 @@ fetch('/clans').then((response) => {
     fetch('/wars').then((response) => {
         return response.json();
     }).then((warData) => {
-        console.log(warData)
         warData = warData.items[0].standings.filter(clan => clan.clan.name == "Quality Dutch")[0].clan;
 
         const memberProperties = ["name", "role", "laatstGezien"]
@@ -79,11 +78,12 @@ fetch('/clans').then((response) => {
             propertyCell.innerHTML = decksUsed
         })
 
+        checkForPromotions()
         tableDiv.append(table)
         tableDiv.style.opacity = "100%"
         let loadingDiv = document.getElementById("loading")
         loadingDiv.style.opacity = "0%"
-            // document.getElementById('warning').innerHTML =
+        // document.getElementById('warning').innerHTML =
         waarschuwLijst.forEach(member => {
             document.getElementById('textarea').innerHTML += `${member}, `
         })
@@ -112,16 +112,27 @@ function ExportToExcel(type, fn, dl) {
     )));
 }
 
-fetch('/members').then((response) => {
-    return response.json();
-}).then((data) => {
-    let response = data.response
+function checkForPromotions() {
+    fetch('/members').then((response) => {
+        return response.json();
+    }).then((data) => {
+        let response = data.response
 
-    for (let i = 0; i < response.length; i++) {
-        const member = response[i];
-        if(member.daysInClan >= 8*7 && member.role === "member") {
-            console.log("some people need promotion!")
-            break
+        for (let i = 0; i < response.length; i++) {
+            const member = response[i];
+            if (member.daysInClan >= 8 * 7 && member.role === "member") {
+                console.log("some people need promotion!")
+                showPromotionMessage()
+                break
+            }
         }
-    }
-})
+    })
+}
+
+function showPromotionMessage() {
+    let popUp = document.getElementById("pop-up")
+    popUp.style.right = "10px"
+    setTimeout(() => {
+        popUp.style.right = "-330px"
+    }, 4000)
+}
