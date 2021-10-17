@@ -4,7 +4,7 @@ const membersDB = NoSQL.load('./local.memberStats.nosql')
 const cron = require('cron')
 const request = require('./clans')
 
-let scheduledMessage = new cron.CronJob('10 * * * * *', () => {
+let scheduledMessage = new cron.CronJob('00 00 15 * * *', () => {
     console.log("Fetching members...")
     let memberList = []
     let memberStats = []
@@ -36,7 +36,7 @@ let scheduledMessage = new cron.CronJob('10 * * * * *', () => {
 })
 
 function startScheduledMessage() {
-    // scheduledMessage.start();
+    scheduledMessage.start();
 }
 
 module.exports = { startScheduledMessage }
