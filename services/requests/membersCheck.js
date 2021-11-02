@@ -9,7 +9,13 @@ let scheduledMessage = new cron.CronJob('00 00 15 * * *', () => {
     let memberList = []
     let memberStats = []
     request.memberData((response) => {
-        let members = JSON.parse(response).items
+        let members
+        try {
+            members = JSON.parse(response).items
+
+        } catch (err) {
+            console.log("Something went wrong: " + err)
+        }
         let date = `${new Date().getUTCDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`
         // console.log(members)
         db.insert({ date, members })
@@ -27,7 +33,7 @@ let scheduledMessage = new cron.CronJob('00 00 15 * * *', () => {
                         let daysInClan = parseInt(response[0].daysInClan) + 1
                         membersDB.modify({ daysInClan }).where('id', member.tag);
                     } else {
-                        membersDB.insert({id: member.tag, daysInClan: 0, role: member.role})
+                        membersDB.insert({id: member.tag, name: member.name, daysInClan: 0, role: member.role})
                     }
                 });
             });
