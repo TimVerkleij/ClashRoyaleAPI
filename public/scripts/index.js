@@ -68,7 +68,7 @@ fetch('/clans').then((response) => {
 
             let propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = fame
-            if (fame == 0) {
+            if (fame < 600) {
                 waarschuwLijst.push(member.name)
                 propertyCell.style.color = "red"
                 propertyCell.style.fontWeight = "bold"
