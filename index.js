@@ -16,6 +16,10 @@ app.use(cors({
     credentials: true
 }))
 
+process.on('uncaughtException', (err) => {
+    console.error(err);
+});
+
 console.log("listening on port: " + process.env.PORT)
 app.listen(process.env.PORT, '0.0.0.0');
 

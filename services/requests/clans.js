@@ -30,4 +30,6 @@ function memberData(callback) {
     });
 }
 
+
+
 module.exports = {clanData, warData, memberData}
