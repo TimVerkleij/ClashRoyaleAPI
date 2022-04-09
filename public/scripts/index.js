@@ -55,7 +55,7 @@ fetch('/clans').then((response) => {
                 let propertyCell = memberRow.insertCell(-1)
                 propertyCell.innerHTML = member[property]
 
-                if (member[property].includes("dagen") && member[property].split(" ")[0] >= 3 && member.name !== "timv13") {
+                if (member[property].includes("dagen") && member[property].split(" ")[0] >= 7 && member.name !== "timv13") {
                     propertyCell.style.color = "red"
                     propertyCell.style.fontWeight = "bold"
                     memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
@@ -68,11 +68,12 @@ fetch('/clans').then((response) => {
 
             let propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = fame
-            if (fame == 0) {
+            if (fame < 600) {
                 waarschuwLijst.push(member.name)
                 propertyCell.style.color = "red"
                 propertyCell.style.fontWeight = "bold"
                 memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
+                memberRow.style.color = "black"
             }
             propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = decksUsed
@@ -83,11 +84,17 @@ fetch('/clans').then((response) => {
         tableDiv.style.opacity = "100%"
         let loadingDiv = document.getElementById("loading")
         loadingDiv.style.opacity = "0%"
+
+        let header = document.getElementById('header')
+        let footer = document.getElementById('footer')
+
+        header.style.opacity = "100%"
+        footer.style.opacity = "100%"
         // document.getElementById('warning').innerHTML =
         waarschuwLijst.forEach(member => {
             document.getElementById('textarea').innerHTML += `${member}, `
         })
-        document.getElementById('textarea').innerHTML += "waarom hebben jullie niet meegedaan in de clanwar?"
+        document.getElementById('textarea').innerHTML += "waarom hebben jullie afgelopen clanwar niet genoeg punten gehaald?"
     })
 
 }).catch(err => {
