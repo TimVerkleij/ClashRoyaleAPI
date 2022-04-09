@@ -1,0 +1,5 @@
+{
+    "watch": ["routes", "services"],
+    "ext": "js",
+    "exec": "node index"
+}

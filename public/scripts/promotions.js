@@ -9,7 +9,7 @@ fetch('/members').then((v) => {
         let memberCard = document.createElement('div')
         memberCard.className = "memberCard"
         let memberId = document.createElement('h3')
-        memberId.innerHTML = `${member.id}`
+        memberId.innerHTML = `${member.name}`
         let daysInClan = document.createElement('p')
         daysInClan.innerHTML = ` Dagen in clan: ${member.daysInClan}`
         memberCard.append(memberId)
