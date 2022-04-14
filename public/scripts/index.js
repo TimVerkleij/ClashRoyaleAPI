@@ -69,7 +69,7 @@ fetch('/clans').then((response) => {
             let propertyCell = memberRow.insertCell(-1)
             propertyCell.innerHTML = fame
             if (fame < 600) {
-                waarschuwLijst.push(member.name)
+                waarschuwLijst.push({id: member.tag, name: member.name})
                 propertyCell.style.color = "red"
                 propertyCell.style.fontWeight = "bold"
                 memberRow.style.backgroundColor = "rgba(255, 0, 0, 0.347)"
@@ -91,11 +91,23 @@ fetch('/clans').then((response) => {
         header.style.opacity = "100%"
         footer.style.opacity = "100%"
         // document.getElementById('warning').innerHTML =
-        waarschuwLijst.forEach(member => {
-            document.getElementById('textarea').innerHTML += `${member}, `
+        waarschuwLijst.forEach((member, index) => {
+            let memberId = member.id.substring(1)
+            fetch('/members/' + memberId).then((response) => {
+                return response.json();
+            }).then((memberData) => {
+                console.log(memberData.response.daysInClan)
+                //! Fix offset for days in clan and warning list
+                if(memberData.response.daysInClan > (new Date().getDay() === 0 ? memberData.response.daysInClan - 7 : memberData.response.daysInClan + 1 - new Date().getDay())) {
+                    document.getElementById('textarea').innerHTML += `${memberData.response.name}, `
+                }
+            }).then( () => {
+                if(index + 1 === waarschuwLijst.length) {
+                    document.getElementById('textarea').innerHTML += "waarom hebben jullie afgelopen clanwar niet genoeg punten gehaald?"
+                }
+            })
         })
-        document.getElementById('textarea').innerHTML += "waarom hebben jullie afgelopen clanwar niet genoeg punten gehaald?"
-        document.getElementById('background').style.filter = 'blur(5px)'
+            document.getElementById('background').style.filter = 'blur(5px)'
     })
 
 }).catch(err => {

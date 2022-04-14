@@ -27,15 +27,22 @@ router.get('/wars', (req, res) => {
 })
 
 router.get('/members', (req, res) => {
-    // request.memberData(function(response) {
-    //     res.send(response)
-    // })
     membersDB.find().make(function(filter) {
         filter.callback(function(err, response) {
             res.json({ response })
         });
     });
-    
+})
+
+router.get('/members/:id', (req, res) => {
+    membersDB.find().make(function(filter) {
+        let memberId = "#" + req.params.id
+        filter.where('id', '=', memberId)
+        filter.callback(function(err, response) {
+            res.json({ response: response[0] })
+        });
+    });
+    // res.json(req.params.id)
 })
 
 module.exports = router

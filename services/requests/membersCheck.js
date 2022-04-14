@@ -5,7 +5,7 @@ const cron = require('cron')
 const request = require('./clans')
 
 let scheduledMessage = new cron.CronJob('15 * * * * *', () => {
-    console.log("Fetching members...")
+    // console.log("Fetching members...")
     let memberList = []
     let memberStats = []
     request.memberData(async (response) => {
@@ -39,7 +39,7 @@ let scheduledMessage = new cron.CronJob('15 * * * * *', () => {
                     console.log(member.id)
                     filter.where('id', '=', member.id)
                     filter.callback( (err, response) => {
-                        console.log(response + " users left the clan today.")
+                        // console.log(response + " users left the clan today.")
                     })
                 })
             }
