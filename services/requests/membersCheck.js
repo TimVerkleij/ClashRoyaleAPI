@@ -4,7 +4,7 @@ const membersDB = NoSQL.load('./local.memberStats.nosql')
 const cron = require('cron')
 const request = require('./clans')
 
-let scheduledMessage = new cron.CronJob('30 00 22 * * *', () => {
+let scheduledMessage = new cron.CronJob('15 * * * * *', () => {
     console.log("Fetching members...")
     let memberList = []
     let memberStats = []
@@ -20,35 +20,37 @@ let scheduledMessage = new cron.CronJob('30 00 22 * * *', () => {
         // console.log(members)
         db.insert({ date, members })
 
-
-        //! trying to remove users from database that are not in clan anymore
         members.forEach(member => {
             memberList.push(member.tag)
         })
 
-        let currentMembers = await new Promise( (res, reject) => {
-            membersDB.find().in('id', memberList).make(function (filter) {
-                filter.callback((response) => {
+        let currentMembersInDB = await new Promise((res) => {
+            membersDB.find().make(filter => {
+                filter.callback( (err, response) => {
                     res(response)
                 })
             })
         })
-        console.log(currentMembers)
 
-        // await new Promise((res) => {
-        //     membersDB.clear().callback(response => {
-        //         res()
-        //     })
-        // })
+        currentMembersInDB.forEach(member => {
+            let isInClan = memberList.includes(member.id)
+            if(!isInClan) {
+                membersDB.remove().make(filter => {
+                    console.log(member.id)
+                    filter.where('id', '=', member.id)
+                    filter.callback( (err, response) => {
+                        console.log(response + " users left the clan today.")
+                    })
+                })
+            }
+        })
 
         members.forEach(member => {
             memberList.push(member.tag)
-            // membersDB.insert({id: member.tag, daysInClan: 0})
             membersDB.find().make(function (filter) {
                 filter.where('id', '=', member.tag)
 
                 filter.callback(function (err, response) {
-                    // console.log(response[0])
                     if (response[0]) {
                         let daysInClan = parseInt(response[0].daysInClan) + 1
                         membersDB.modify({ daysInClan, name: member.name }).where('id', member.tag);
@@ -60,21 +62,6 @@ let scheduledMessage = new cron.CronJob('30 00 22 * * *', () => {
             
         });
         
-
-        // console.log(currentMembers, 'hello')
-
-        // let idk = await membersDB.clear().callback(res => {
-        //     console.log(res)
-        //     console.log(currentMembers)
-        //     membersDB.insert(currentMembers)
-        // })
-        // console.log(idk, 'idk')
-
-        // currentMembers.forEach(async (member) => {
-        //     await membersDB.insert({'id': member.id})
-        // })
-        // console.log(currentMembers)
-        // membersDB.insert(currentMembers)
     })
 })
 

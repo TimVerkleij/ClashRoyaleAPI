@@ -9,6 +9,7 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <title>Quality Dutch</title>
     </head>
+    <div class="background" id="background"></div>
     <body>
         <div class="header" id="header">
             <a href="index.html">
@@ -28,21 +29,23 @@
             </p>
 
         </div>
-
-        <div class="dataTable" id="tableDiv">
-            <br>
-            <p id="warning">
-                <strong>Mensen die niet genoeg punten hebben gehaald tijdens de clanwar:
-                </strong>
-            </p>
-            <textarea name="" id="textarea" cols="50" rows="3"></textarea>
-            <div class="copyButtonsDiv">
-                <button onclick="copy()">Kopiëren</button><br><br>
-                <button onclick="ExportToExcel('xlsx')">Exporteer tabel naar excel</button>
+        <div>
+            <div class="dataTable" id="tableDiv">
+                <br>
+                <p id="warning">
+                    <strong>Mensen die niet genoeg punten hebben gehaald tijdens de clanwar:
+                    </strong>
+                </p>
+                <textarea name="" id="textarea" cols="50" rows="3"></textarea>
+                <div class="copyButtonsDiv">
+                    <button onclick="copy()">Kopiëren</button><br><br>
+                    <button onclick="ExportToExcel('xlsx')">Exporteer tabel naar excel</button>
+                </div>
+                
+    
             </div>
-            
-
         </div>
+        
 
         <div class="pop-up" id="pop-up">
             <p>Sommige mensen kunnen gepromoveerd worden tot oudste!</p>

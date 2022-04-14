@@ -95,6 +95,7 @@ fetch('/clans').then((response) => {
             document.getElementById('textarea').innerHTML += `${member}, `
         })
         document.getElementById('textarea').innerHTML += "waarom hebben jullie afgelopen clanwar niet genoeg punten gehaald?"
+        document.getElementById('background').style.filter = 'blur(5px)'
     })
 
 }).catch(err => {
